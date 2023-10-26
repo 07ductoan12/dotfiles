@@ -53,3 +53,4 @@ vim.notify = function(msg, log_level, _opts)
   end
 end
 vim.cmd("autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o")
+vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]

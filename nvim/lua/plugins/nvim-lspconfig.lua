@@ -228,6 +228,7 @@ local config = function()
       "markdown",
       "docker",
       "solidity",
+      "html"
     },
     init_options = {
       documentFormatting = true,
@@ -246,6 +247,7 @@ local config = function()
         jsonc = { eslint_d, fixjson },
         sh = { shellcheck, shfmt },
         javascript = { eslint_d, prettierd },
+        html = { eslint_d, prettierd },
         javascriptreact = { eslint_d, prettierd },
         typescriptreact = { eslint_d, prettierd },
         svelte = { eslint_d, prettierd },
@@ -255,6 +257,19 @@ local config = function()
         solidity = { solhint },
       },
     },
+  })
+  local lsp_fmt_group = vim.api.nvim_create_augroup('LspFormattingGroup', {})
+  vim.api.nvim_create_autocmd('BufWritePost', {
+    group = lsp_fmt_group,
+    callback = function(ev)
+      local efm = vim.lsp.get_active_clients({ name = 'efm', bufnr = ev.buf })
+
+      if vim.tbl_isempty(efm) then
+        return
+      end
+
+      vim.lsp.buf.format({ name = 'efm' })
+    end,
   })
 end
 
