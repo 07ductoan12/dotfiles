@@ -4,12 +4,10 @@ return {
   event = { "BufReadPre", "BufNewFile" }, -- to disable, comment this out
   config = function()
     local conform = require("conform")
-    conform.formatters.prettier = {
-      prepend_args = { "--trailing-comma", "es5", "--semi", "false", "--print-width", "120", "--single-quote", "true",
-        "--tab-width", "2", }
-      -- The base args are { "-filename", "$FILENAME" } so the final args will be
-      -- { "-i", "2", "-filename", "$FILENAME" }
-    }
+    -- conform.formatters.prettier = {
+    --   prepend_args = { "--trailing-comma", "es5", "--semi", "false", "--print-width", "120", "--single-quote", "true",
+    --     "--tab-width", "2", }
+    -- }
 
     conform.setup({
       formatters_by_ft = {
