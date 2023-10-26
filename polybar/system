@@ -1,0 +1,5 @@
+[system]
+adapter = AC
+battery = BAT1
+graphics_card = NVIDIA Corporation GA106
+network_interface = enp4s0
