@@ -45,7 +45,6 @@ keymap.set('n', '<leader>hR', '<Cmd>:Gitsigns reset_buffer<CR>', cmd_options)
 keymap.set('n', '<leader>hp', '<Cmd>:Gitsigns preview_hunk<CR>', cmd_options)
 keymap.set('n', '<leader>lb', '<Cmd>:Gitsigns toggle_current_line_blame<CR>', cmd_options)
 
--- floaterm
 -- Floaterm
 keymap.set('n', '<A-p>', '<CMD>:FloatermNext<CR>')
 keymap.set('t', '<A-p>', '<CMD>:FloatermNext<CR>')
@@ -61,3 +60,9 @@ keymap.set('n', '<leader>cc', '<CMD>:FloatermNew --autoclose=0 g++ % -o %<.exe &
 keymap.set('n', '<C-p>', '<CMD>:FloatermNew --autoclose=0 python3 %<.py <CR>')
 keymap.set('n', '<A-c>', ':bd<CR>', opts)
 keymap.set('t', '<A-c>', ':bd<CR>', opts)
+
+-- resize buf
+keymap.set('n', '<A-h>', "<CMD>:SmartResizeLeft<CR>", opts)
+keymap.set('n', '<A-j>', "<CMD>:SmartResizeDown<CR>", opts)
+keymap.set('n', '<A-k>', "<CMD>:SmartResizeUp<CR>", opts)
+keymap.set('n', '<A-l>', "<CMD>:SmartResizeRight<CR>", opts)
