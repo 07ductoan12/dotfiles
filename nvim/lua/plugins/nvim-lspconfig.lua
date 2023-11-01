@@ -6,7 +6,6 @@ local config = function()
   local cmp_nvim_lsp = require("cmp_nvim_lsp")
   local lspconfig = require("lspconfig")
   local utils = require('lspconfig.util')
-  local navic = require("nvim-navic")
 
   for type, icon in pairs(diagnostic_signs) do
     local hl = "DiagnosticSign" .. type
@@ -67,10 +66,7 @@ local config = function()
     cmd = { "pyright-langserver", "--stdio" },
     filetypes = { "python" },
     capabilities = capabilities,
-    on_attach = function(client, bufnr)
-      on_attach(client, bufnr)
-      require("nvim-navic").attach(client, bufnr)
-    end,
+    on_attach = on_attach,
     settings = {
       python = {
         analysis = {
@@ -118,10 +114,7 @@ local config = function()
     cmd = { "clangd" },
     filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
     capabilities = capabilities,
-    on_attach = function(client, bufnr)
-      on_attach(client, bufnr)
-      require("nvim-navic").attach(client, bufnr)
-    end,
+    on_attach = on_attach,
     commands = {
       ClangdSwitchSourceHeader = {
         function()
@@ -191,86 +184,82 @@ local config = function()
     capabilities        = capabilities,
     single_file_support = true,
     root_dir            = utils.root_pattern 'Dockerfile',
-    on_attach           = function(client, bufnr)
-      on_attach(client, bufnr)
-      require("nvim-navic").attach(client, bufnr)
-    end,
-  }
+    on_attach           = on_attach }
 
 
-  local luacheck = require("efmls-configs.linters.luacheck")
-  local stylua = require("efmls-configs.formatters.stylua")
-  local flake8 = require("efmls-configs.linters.flake8")
-  local black = require("efmls-configs.formatters.black")
-  local eslint_d = require("efmls-configs.linters.eslint_d")
-  local prettierd = require("efmls-configs.formatters.prettier_d")
-  local fixjson = require("efmls-configs.formatters.fixjson")
-  local shellcheck = require("efmls-configs.linters.shellcheck")
-  local shfmt = require("efmls-configs.formatters.shfmt")
-  local alex = require("efmls-configs.linters.alex")
-  local hadolint = require("efmls-configs.linters.hadolint")
-  local solhint = require("efmls-configs.linters.solhint")
-
-  -- configure efm server
-  lspconfig.efm.setup({
-    filetypes = {
-      "lua",
-      "python",
-      "json",
-      "jsonc",
-      "sh",
-      "javascript",
-      "javascriptreact",
-      "typescript",
-      "typescriptreact",
-      "svelte",
-      "vue",
-      "markdown",
-      "docker",
-      "solidity",
-      "html"
-    },
-    init_options = {
-      documentFormatting = true,
-      documentRangeFormatting = true,
-      hover = true,
-      documentSymbol = true,
-      codeAction = true,
-      completion = true,
-    },
-    settings = {
-      languages = {
-        lua = { luacheck, stylua },
-        python = { flake8, black },
-        typescript = { eslint_d, prettierd },
-        json = { eslint_d, fixjson },
-        jsonc = { eslint_d, fixjson },
-        sh = { shellcheck, shfmt },
-        javascript = { eslint_d, prettierd },
-        html = { eslint_d, prettierd },
-        javascriptreact = { eslint_d, prettierd },
-        typescriptreact = { eslint_d, prettierd },
-        svelte = { eslint_d, prettierd },
-        vue = { eslint_d, prettierd },
-        markdown = { alex, prettierd },
-        docker = { hadolint, prettierd },
-        solidity = { solhint },
-      },
-    },
-  })
-  local lsp_fmt_group = vim.api.nvim_create_augroup('LspFormattingGroup', {})
-  vim.api.nvim_create_autocmd('BufWritePost', {
-    group = lsp_fmt_group,
-    callback = function(ev)
-      local efm = vim.lsp.get_active_clients({ name = 'efm', bufnr = ev.buf })
-
-      if vim.tbl_isempty(efm) then
-        return
-      end
-
-      vim.lsp.buf.format({ name = 'efm' })
-    end,
-  })
+  -- local luacheck = require("efmls-configs.linters.luacheck")
+  -- local stylua = require("efmls-configs.formatters.stylua")
+  -- local flake8 = require("efmls-configs.linters.flake8")
+  -- local black = require("efmls-configs.formatters.black")
+  -- local eslint_d = require("efmls-configs.linters.eslint_d")
+  -- local prettierd = require("efmls-configs.formatters.prettier_d")
+  -- local fixjson = require("efmls-configs.formatters.fixjson")
+  -- local shellcheck = require("efmls-configs.linters.shellcheck")
+  -- local shfmt = require("efmls-configs.formatters.shfmt")
+  -- local alex = require("efmls-configs.linters.alex")
+  -- local hadolint = require("efmls-configs.linters.hadolint")
+  -- local solhint = require("efmls-configs.linters.solhint")
+  --
+  -- -- configure efm server
+  -- lspconfig.efm.setup({
+  --   filetypes = {
+  --     "lua",
+  --     "python",
+  --     "json",
+  --     "jsonc",
+  --     "sh",
+  --     "javascript",
+  --     "javascriptreact",
+  --     "typescript",
+  --     "typescriptreact",
+  --     "svelte",
+  --     "vue",
+  --     "markdown",
+  --     "docker",
+  --     "solidity",
+  --     "html"
+  --   },
+  --   init_options = {
+  --     documentFormatting = true,
+  --     documentRangeFormatting = true,
+  --     hover = true,
+  --     documentSymbol = true,
+  --     codeAction = true,
+  --     completion = true,
+  --   },
+  --   settings = {
+  --     languages = {
+  --       lua = { luacheck, stylua },
+  --       python = { flake8, black },
+  --       typescript = { eslint_d, prettierd },
+  --       json = { eslint_d, fixjson },
+  --       jsonc = { eslint_d, fixjson },
+  --       sh = { shellcheck, shfmt },
+  --       javascript = { eslint_d, prettierd },
+  --       html = { eslint_d, prettierd },
+  --       javascriptreact = { eslint_d, prettierd },
+  --       typescriptreact = { eslint_d, prettierd },
+  --       svelte = { eslint_d, prettierd },
+  --       vue = { eslint_d, prettierd },
+  --       markdown = { alex, prettierd },
+  --       docker = { hadolint, prettierd },
+  --       solidity = { solhint },
+  --     },
+  --   },
+  -- })
+  -- local lsp_fmt_group = vim.api.nvim_create_augroup('LspFormattingGroup', {})
+  -- vim.api.nvim_create_autocmd('BufWritePost', {
+  --   group = lsp_fmt_group,
+  --   callback = function(ev)
+  --     local efm = vim.lsp.get_active_clients({ name = 'efm', bufnr = ev.buf })
+  --
+  --     if vim.tbl_isempty(efm) then
+  --       return
+  --     end
+  --
+  --     vim.lsp.buf.format({ name = 'efm' })
+  --   end,
+  -- })
 end
 
 return {
@@ -279,7 +268,7 @@ return {
   lazy = false,
   dependencies = {
     "williamboman/mason.nvim",
-    "creativenull/efmls-configs-nvim",
+    -- "creativenull/efmls-configs-nvim",
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-nvim-lsp",
