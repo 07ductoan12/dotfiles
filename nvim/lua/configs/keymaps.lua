@@ -25,13 +25,16 @@ keymap.set("v", ">", ">gv")
 vim.api.nvim_set_keymap("n", "C-_>", "gcc", { noremap = false })
 vim.api.nvim_set_keymap("v", "C-_>", "gcc", { noremap = false })
 
--- Symbol outline
-keymap.set('n', '<leader>so', ':SymbolsOutline<CR>', opts)
-keymap.set('t', '<leader>so', ':SymbolsOutline<CR>', opts)
-
 -- Buffer
 keymap.set("n", "]b", ":bnext<CR>", cmd_options)
 keymap.set("n", "[b", ":bprevious<CR>", cmd_options)
+
+-- resize buf
+keymap.set('n', '<A-h>', "<CMD>:SmartResizeLeft<CR>", opts)
+keymap.set('n', '<A-j>', "<CMD>:SmartResizeDown<CR>", opts)
+keymap.set('n', '<A-k>', "<CMD>:SmartResizeUp<CR>", opts)
+keymap.set('n', '<A-l>', "<CMD>:SmartResizeRight<CR>", opts)
+
 
 -- git
 keymap.set("n", "<leader>lg", "<Cmd>:LazyGit<CR>", cmd_options)
@@ -61,8 +64,16 @@ keymap.set('n', '<C-p>', '<CMD>:FloatermNew --autoclose=0 python3 %<.py <CR>')
 keymap.set('n', '<A-c>', ':bd<CR>', opts)
 keymap.set('t', '<A-c>', ':bd<CR>', opts)
 
--- resize buf
-keymap.set('n', '<A-h>', "<CMD>:SmartResizeLeft<CR>", opts)
-keymap.set('n', '<A-j>', "<CMD>:SmartResizeDown<CR>", opts)
-keymap.set('n', '<A-k>', "<CMD>:SmartResizeUp<CR>", opts)
-keymap.set('n', '<A-l>', "<CMD>:SmartResizeRight<CR>", opts)
+-- fold
+keymap.set('n', 'zR', require('ufo').openAllFolds)
+keymap.set('n', 'zM', require('ufo').closeAllFolds)
+keymap.set('n', 'zr', require('ufo').openFoldsExceptKinds)
+keymap.set('n', 'zm', require('ufo').closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
+keymap.set('n', 'K', function()
+    local winid = require('ufo').peekFoldedLinesUnderCursor()
+    if not winid then
+        -- choose one of coc.nvim and nvim lsp
+        vim.fn.CocActionAsync('definitionHover') -- coc.nvim
+        vim.lsp.buf.hover()
+    end
+end)

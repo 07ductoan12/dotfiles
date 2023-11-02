@@ -1,5 +1,6 @@
 local opt = vim.opt
 local setg = vim.g
+local utils = require "util.utils"
 
 -- Tab / Indentation
 opt.tabstop = 2
@@ -44,13 +45,12 @@ opt.modifiable = true
 setg.loaded_netrw = 1
 setg.loaded_netrwPlugin = 1
 opt.encoding = "UTF-8"
-vim.notify = function(msg, log_level, _opts)
-  if msg:match("exit code") then return end
-  if log_level == vim.log.levels.ERROR then
-    vim.api.nvim_err_writeln(msg)
-  else
-    vim.api.nvim_echo({ { msg } }, true, {})
-  end
-end
 vim.cmd("autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o")
 vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
+
+vim.opt.shortmess:append "c"
+
+vim.cmd [[set fcs=eob:\ ]]
+vim.cmd [[filetype plugin indent on]]
+
+utils.set_indent_sizes { go = 4, python = 4, rust = 4, cpp = 4, c = 4, make = 4, lua = 4, java = 4, json = 4 }
