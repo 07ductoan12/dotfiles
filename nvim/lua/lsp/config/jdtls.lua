@@ -108,6 +108,15 @@ local config = {
                     template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
                 },
             },
+            format = {
+                settings = {
+                    -- Use Google Java style guidelines for formatting
+                    -- To use, make sure to download the file from https://github.com/google/styleguide/blob/gh-pages/eclipse-java-google-style.xml
+                    -- and place it in the ~/.local/share/eclipse directory
+                    url = ".config/nvim/eclipse-java-google-style.xml",
+                    profile = "GoogleStyle",
+                },
+            }
         },
     },
 }

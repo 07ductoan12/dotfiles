@@ -1,7 +1,7 @@
 return {
     "williamboman/mason.nvim",
     cmd = "Mason",
-    event = "BufReadPre",
+    event = { "BufReadPre", "BufNewFile" },
     lazy = false,
     opts = {
         ui = {

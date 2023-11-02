@@ -26,8 +26,8 @@ vim.api.nvim_set_keymap("n", "C-_>", "gcc", { noremap = false })
 vim.api.nvim_set_keymap("v", "C-_>", "gcc", { noremap = false })
 
 -- Buffer
-keymap.set("n", "]b", ":bnext<CR>", cmd_options)
-keymap.set("n", "[b", ":bprevious<CR>", cmd_options)
+keymap.set("n", ".b", ":bnext<CR>", cmd_options)
+keymap.set("n", ",b", ":bprevious<CR>", cmd_options)
 
 -- resize buf
 keymap.set('n', '<A-h>', "<CMD>:SmartResizeLeft<CR>", opts)
@@ -77,3 +77,17 @@ keymap.set('n', 'K', function()
         vim.lsp.buf.hover()
     end
 end)
+
+
+-- Symbol outline
+keymap.set('n', '<leader>so', ':SymbolsOutline<CR>', opts)
+keymap.set('t', '<leader>so', ':SymbolsOutline<CR>', opts)
+
+
+-- Trouble
+keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
+keymap.set("n", "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end)
+keymap.set("n", "<leader>xd", function() require("trouble").toggle("document_diagnostics") end)
+keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix") end)
+keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end)
+keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end)

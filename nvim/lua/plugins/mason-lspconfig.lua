@@ -20,7 +20,8 @@ local opts = {
         "emmet_language_server",
         "jdtls",
         "docker_compose_language_service",
-        "jdtls"
+        "jdtls",
+        "lemminx"
     },
     -- auto-install configured servers (with lspconfig)
     automatic_installation = true, -- not the same as ensure_installed
@@ -29,6 +30,6 @@ local opts = {
 return {
     "williamboman/mason-lspconfig.nvim",
     opts = opts,
-    event = "BufReadPre",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = "williamboman/mason.nvim"
 }

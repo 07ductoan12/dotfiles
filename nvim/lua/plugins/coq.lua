@@ -1,7 +1,7 @@
 return {
     "ms-jpq/coq_nvim",
     branch = "coq",
-    event = { "BufReadPre", "BufNewFile" },
+    event = "InsertEnter",
     dependencies = {
         {
             "ms-jpq/coq.artifacts",

@@ -23,6 +23,7 @@ local config = function()
             "sql",
             "query",
             "c",
+            "xml",
         },
         sync_install = false,
         auto_install = true,

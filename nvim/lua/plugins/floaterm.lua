@@ -1,6 +1,6 @@
 return {
     "voldikss/vim-floaterm",
-    event = { "BufReadPre", "BufNewFile" }, -- to disable, comment this out
+    lazy = false,
     config = function()
         vim.g["floaterm_position"] = 'topright'
         vim.g["floaterm_width"] = 0.5
