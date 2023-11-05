@@ -192,3 +192,9 @@ lspconfig.dockerls.setup {
     single_file_support = true,
     root_dir            = utils.root_pattern 'Dockerfile',
     on_attach           = on_attach }
+
+require 'lspconfig'.lemminx.setup {
+    cmd = { "lemminx" },
+    filetypes = { "xml", "xsd", "xsl", "xslt", "svg" },
+    single_file_support = true
+}

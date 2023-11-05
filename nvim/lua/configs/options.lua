@@ -53,4 +53,4 @@ vim.opt.shortmess:append "c"
 vim.cmd [[set fcs=eob:\ ]]
 vim.cmd [[filetype plugin indent on]]
 
-utils.set_indent_sizes { go = 4, python = 4, rust = 4, cpp = 4, c = 4, make = 4, lua = 4, java = 4, json = 4 }
+utils.set_indent_sizes { go = 4, python = 4, rust = 4, cpp = 4, c = 4, make = 4, lua = 4, java = 4, json = 4, xml = 4 }
